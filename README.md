@@ -1,6 +1,6 @@
 ﻿
 <h1 align="center">MedDenoiser</h1>
-<p align="center"> <img src="assets/medical_banner.png" width="400" alt="MedGAN Logo"/> </p>
+<p align="center"> <img src="assets/medical_banner.png" width="300" alt="MedGAN Logo"/> </p>
 <p align="center"> 
   Medical Image Denoising using Generative Adversarial Networks </p> <p align="center"> <img src="https://img.shields.io/badge/Python-3.x-blue" /> <img src="https://img.shields.io/badge/Deep%20Learning-GAN-red" /> 
     <img src="https://img.shields.io/badge/Framework-PyTorch%20%7C%20TensorFlow-orange" /> <img src="https://img.shields.io/badge/Domain-Medical%20Imaging-green" /> <img src="https://img.shields.io/badge/Status-Development-yellow" /> </p>
@@ -37,7 +37,7 @@ MedGAN Denoiser provides:
 
 ---
 ## ✪ System Architecture
-<p align="left"> <img src="assets/architecture.png" width="900" alt="System Architecture"/> </p>
+<p align="left"> <img src="assets/architecture.png" width="800" alt="System Architecture"/> </p>
 
 ---
 ## ✪ Core Modules
