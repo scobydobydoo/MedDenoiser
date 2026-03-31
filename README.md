@@ -74,25 +74,15 @@ Gaussian Filter
 Median Filter
 Non-Local Means
 CNN-based models
-✪ Tools & Technologies
-Languages: Python
-Frameworks: PyTorch / TensorFlow
-Libraries: OpenCV, NumPy, Matplotlib
-Machine Learning: GANs, CNNs
-Version Control: Git & GitHub
-✪ Project Goals
-Design a GAN-based denoising architecture
-Train model on medical datasets
-Evaluate using PSNR, SSIM, MSE
-Compare with traditional methods
-Build a complete end-to-end pipeline
-✪ Milestones
-Dataset collection & preprocessing
-Baseline CNN implementation
-GAN model development
-Training & tuning
-Evaluation & comparison
-Final demo & documentation
+
+---
+## ✪ Tools & Technologies
+- Languages: Python
+- Frameworks: PyTorch / TensorFlow
+- Libraries: OpenCV, NumPy, Matplotlib
+- Machine Learning: GANs, CNNs
+- Version Control: Git & GitHub
+---
 
 ## 📁 Project Structure
 
