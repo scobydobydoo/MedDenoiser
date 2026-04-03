@@ -1,11 +1,11 @@
 import torch
 import torch.nn as nn
 
-
 class PatchGAN(nn.Module):
 
     def __init__(self, base=32):
         super().__init__()
+
 
         def block(ic, oc, stride=2, norm=True):
             layers = [nn.Conv2d(ic, oc, 4, stride=stride, padding=1, bias=not norm)]
