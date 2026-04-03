@@ -1,13 +1,3 @@
-"""
-train.py
-────────
-Run:  python train.py
-
-Trains for 50 epochs on synthetic data.
-Saves:  best_generator.pth   (best validation PSNR)
-        loss_curve.png
-"""
-
 import os, json
 import numpy as np
 import torch
@@ -22,18 +12,18 @@ from dataset  import get_loaders, from_tensor
 from generator     import UNet
 from discriminator import PatchGAN
 
-# ── Config ──────────────────────────────────────────────────────────────────
+
 IMAGE_SIZE  = 256
 N_IMAGES    = 300
-BATCH_SIZE  = 4       # keep low for CPU training
+BATCH_SIZE  = 4       
 N_EPOCHS    = 50
 LR          = 2e-4
-LAMBDA_L1   = 100.0   # weight of pixel loss vs adversarial loss
+LAMBDA_L1   = 100.0  
 NOISE_STD   = 0.05
 DEVICE      = "cuda" if torch.cuda.is_available() else "cpu"
 SAVE_PATH   = "best_generator.pth"
 
-# ── Setup ───────────────────────────────────────────────────────────────────
+
 print(f"Device: {DEVICE}")
 train_loader, val_loader, all_images = get_loaders(
     n_images=N_IMAGES, image_size=IMAGE_SIZE,
@@ -49,10 +39,10 @@ opt_D = torch.optim.Adam(D.parameters(), lr=LR, betas=(0.5, 0.999))
 bce = nn.BCEWithLogitsLoss()
 l1  = nn.L1Loss()
 
-# ── Helpers ──────────────────────────────────────────────────────────────────
+
 
 def real_labels(pred):
-    return torch.full_like(pred, 0.9)   # label smoothing
+    return torch.full_like(pred, 0.9)   
 
 def fake_labels(pred):
     return torch.zeros_like(pred)
@@ -71,7 +61,7 @@ def validate():
             psnr_vals.append(psnr(c, d, data_range=1.0))
     return float(np.mean(psnr_vals))
 
-# ── Training loop ────────────────────────────────────────────────────────────
+
 
 g_losses, d_losses, psnr_log = [], [], []
 best_psnr = 0.0
@@ -85,18 +75,18 @@ for epoch in range(1, N_EPOCHS + 1):
     for noisy, clean in tqdm(train_loader, desc=f"Epoch {epoch:02d}", leave=False):
         noisy, clean = noisy.to(DEVICE), clean.to(DEVICE)
 
-        # ── Train Discriminator ──────────────────────────────────
+       
         opt_D.zero_grad()
-        denoised     = G(noisy).detach()           # no grad to G
+        denoised     = G(noisy).detach()           
         loss_D_real  = bce(D(noisy, clean),    real_labels(D(noisy, clean)))
         loss_D_fake  = bce(D(noisy, denoised), fake_labels(D(noisy, denoised)))
         loss_D       = 0.5 * (loss_D_real + loss_D_fake)
         loss_D.backward()
         opt_D.step()
 
-        # ── Train Generator ──────────────────────────────────────
+        
         opt_G.zero_grad()
-        denoised     = G(noisy)                    # fresh forward with grad
+        denoised     = G(noisy)                    
         loss_G_adv   = bce(D(noisy, denoised), real_labels(D(noisy, denoised)))
         loss_G_l1    = l1(denoised, clean)
         loss_G       = loss_G_adv + LAMBDA_L1 * loss_G_l1
@@ -121,7 +111,7 @@ for epoch in range(1, N_EPOCHS + 1):
         torch.save(G.state_dict(), SAVE_PATH)
         print(f"  ★ New best PSNR {val_psnr:.2f} dB → saved {SAVE_PATH}")
 
-# ── Save loss curve ───────────────────────────────────────────────────────────
+
 
 epochs = range(1, N_EPOCHS + 1)
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))

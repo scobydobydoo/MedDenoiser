@@ -3,11 +3,6 @@ import torch.nn as nn
 
 
 class PatchGAN(nn.Module):
-    """
-    PatchGAN Discriminator.
-    Input: cat(noisy, denoised_or_clean) → shape (B, 2, H, W)
-    Output: patch-level logits (B, 1, H', W')
-    """
 
     def __init__(self, base=32):
         super().__init__()
@@ -21,14 +16,14 @@ class PatchGAN(nn.Module):
 
         b = base
         self.model = nn.Sequential(
-            block(2,    b,   norm=False),   # 2 input channels (noisy + target)
+            block(2,    b,   norm=False),  
             block(b,    b*2),
             block(b*2,  b*4),
-            block(b*4,  b*8, stride=1),     # stride 1 — begin patch scoring
-            nn.Conv2d(b*8, 1, 4, stride=1, padding=1),  # patch logits
+            block(b*4,  b*8, stride=1),     
+            nn.Conv2d(b*8, 1, 4, stride=1, padding=1),  
         )
 
-        # Init weights
+        
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 nn.init.normal_(m.weight, 0.0, 0.02)

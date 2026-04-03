@@ -1,5 +1,5 @@
 """
-      python run.py --image my_scan.png    (your own image)
+      python run.py --image my_scan.png  
 """
 
 import argparse
@@ -66,8 +66,8 @@ print(f"Improvement: +{psnr_denoised - psnr_noisy:.2f} dB PSNR")
 fig, axes = plt.subplots(1, 3, figsize=(13, 4))
 data = [
     (noisy,    f"Noisy\nPSNR={psnr_noisy:.1f} dB"),
-    (denoised, f"Denoised (GAN)\nPSNR={psnr_denoised:.1f} dB"),
-    (clean,    "Ground Truth"),
+    (denoised, f"Denoised \nPSNR={psnr_denoised:.1f} dB"),
+    (clean,    "cleanned"),
 ]
 for ax, (img, title) in zip(axes, data):
     ax.imshow(img, cmap="gray", vmin=0, vmax=1)

@@ -4,7 +4,7 @@ from torch.utils.data import Dataset, DataLoader, random_split
 from scipy.ndimage import gaussian_filter
 from noise import add_mixed_noise
 
-# ── Generate synthetic brain/CT/xray phantoms ──────────────────────────────
+
 
 def make_phantom(size=256, kind=0):
     """Create a simple medical-looking phantom image."""
@@ -43,15 +43,15 @@ def generate_images(n=300, size=256, seed=42):
     images = []
     for i in range(n):
         img = make_phantom(size=size, kind=i % 3)
-        # Random augmentation
+        
         img = np.clip(img * np.random.uniform(0.85, 1.15), 0, 1)
         if np.random.rand() > 0.5:
-            img = img[:, ::-1].copy()   # horizontal flip
+            img = img[:, ::-1].copy()   
         images.append(img)
     return images
 
 
-# ── PyTorch Dataset ─────────────────────────────────────────────────────────
+
 
 def to_tensor(img):
     """float32 [0,1] → tensor [-1,1] with channel dim."""
@@ -91,4 +91,4 @@ def get_loaders(n_images=300, image_size=256, batch_size=8, noise_std=0.05):
                               num_workers=0, pin_memory=False)
 
     print(f"Dataset: {n_train} train  |  {n_val} val")
-    return train_loader, val_loader, images  # return images for test later
+    return train_loader, val_loader, images  
